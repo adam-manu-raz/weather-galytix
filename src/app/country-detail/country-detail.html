@@ -1,8 +1,27 @@
-<p>
+<div>
     Country:
     <tr>
         <td style="width: 200px;">{{country.country == '' ? 'Country was not selected.' : country.country}}</td>
         <td style="width: 50px;">{{country.country == '' ? '' : country.iso2}}</td>
         <td style="width: 50px;">{{country.country == '' ? '' : country.iso3}}</td>
     </tr>
-</p>
+
+    <div style="margin: 20px">
+        <mat-button-toggle-group name="units" [(ngModel)]="myUnits" aria-label="Font Style">
+            <mat-button-toggle  value="metric">Metric</mat-button-toggle>
+            <mat-button-toggle value="imperial">Imperial</mat-button-toggle>
+        </mat-button-toggle-group>
+    </div>
+
+    @if (myWeatherData) {
+        <div><img [src]="'https://openweathermap.org/img/wn/' + myWeatherData.weather[0]?.icon + '.png'"> </div>
+        <div>Description: {{myWeatherData.weather[0]?.description}} </div>
+        <div>Temperature: {{myWeatherData?.main?.temp}} {{myUnits == 'metric'?'Celsius':'Fahrenheit'}}</div>
+        <div>Temperature min: {{myWeatherData.main?.temp_min}} {{myUnits == 'metric'?'Celsius':'Fahrenheit'}}</div>
+        <div>Temperature max: {{myWeatherData.main?.temp_max}} {{myUnits == 'metric'?'Celsius':'Fahrenheit'}}</div>
+        <div>Wind degree: {{myWeatherData.wind?.deg}}</div>
+        <div>Wind gust: {{myWeatherData.wind?.gust}}</div>
+        <div>Wind speed: {{myWeatherData.wind?.speed}} {{myUnits == 'metric'?'meter/sec':'miles/hour'}}</div>
+    }
+
+</div>

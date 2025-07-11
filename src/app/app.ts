@@ -1,4 +1,4 @@
-import {Component, OnInit, signal} from '@angular/core';
+import {Component, OnDestroy, OnInit, signal} from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import {HttpClient} from "@angular/common/http";
 import {MatSort, MatSortHeader, Sort} from "@angular/material/sort";
@@ -11,7 +11,7 @@ import {NgStyle} from "@angular/common";
   templateUrl: './app.html',
   styleUrl: './app.sass'
 })
-export class App implements OnInit {
+export class App implements OnInit, OnDestroy {
   protected readonly title = signal('weather-galytix');
 
   protected countries: Country[];
@@ -30,12 +30,11 @@ export class App implements OnInit {
     };
   }
 
-  ngOnInit() {
-    this.http.get<Config>('https://countriesnow.space/api/v0.1/countries').subscribe(config => {
-      // process the configuration.
-      console.log(config)
+  private mySub: any;
 
-      console.log(config.data[0])
+  ngOnInit() {
+    this.mySub = this.http.get<Config>('https://countriesnow.space/api/v0.1/countries').subscribe(config => {
+      // process the configuration.
       this.countries = config.data;
       this.sortedCountries = this.countries.slice();
     });
@@ -65,6 +64,10 @@ export class App implements OnInit {
           return 0;
       }
     });
+  }
+
+  ngOnDestroy() {
+    this.mySub.unsubscribe();
   }
 
 }

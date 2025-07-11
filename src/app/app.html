@@ -9,7 +9,7 @@
         </tr>
 
         @for (con of sortedCountries; track con) {
-            <tr (click)="selectCon(con)" [ngStyle]="{'background-color': selectedCountry.iso2 == con.iso2 ? 'aliceblue' : ''}">
+            <tr (click)="selectCon(con)" [ngStyle]="{'background-color': selectedCountry.iso2 == con.iso2 ? 'aliceblue' : '', 'cursor':'pointer'}">
                 <td>{{con.country}}</td>
                 <td>{{con.iso2}}</td>
                 <td>{{con.iso3}}</td>
